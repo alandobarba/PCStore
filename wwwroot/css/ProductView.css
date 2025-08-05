@@ -1,0 +1,51 @@
+﻿body {
+    background: #f7f7f7;
+    font-family: 'Segoe UI', sans-serif;
+    color: #333;
+}
+
+h2 {
+    font-size: 2rem;
+    color: #222;
+}
+
+.price-display span {
+    font-size: 0.9rem;
+}
+
+.carousel-inner img {
+    max-height: 450px;
+    object-fit: contain;
+    background-color: #fff;
+    padding: 1rem;
+    transition: transform 0.3s ease;
+}
+
+    .carousel-inner img:hover {
+        transform: scale(1.02);
+    }
+
+.thumbnail-img {
+    border: 2px solid transparent;
+    transition: border 0.2s ease;
+}
+
+    .thumbnail-img:hover {
+        border: 2px solid #28a745;
+    }
+
+.btn-success {
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-success:hover {
+        background-color: #28a745;
+    }
+
+@media (max-width: 768px) {
+    .carousel-inner img {
+        max-height: 300px;
+    }
+}

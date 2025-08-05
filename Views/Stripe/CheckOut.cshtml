@@ -1,0 +1,127 @@
+﻿@model P_CStore.Models.CheckOutModel
+
+@{
+    ViewData["Title"] = "CheckOut";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>CheckOut</h1>
+<div class="row">
+    <div class="col-sm-6">
+        <form asp-action="ProcessPayment" method="post" id="payment-form">
+            <div class="form-group">
+                <label asp-for="customer.Name"></label>
+                <input asp-for="customer.Name" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="customer.LastName"></label>
+                <input asp-for="customer.LastName" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="customer.Email"></label>
+                <input asp-for="customer.Email" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="customer.PhoneNumber"></label>
+                <input asp-for="customer.PhoneNumber" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="customer.StreetAddress"></label>
+                <input asp-for="customer.StreetAddress" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="customer.City"></label>
+                <input asp-for="customer.City" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="customer.Province"></label>
+                <input asp-for="customer.Province" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="customer.PostalCode"></label>
+                <input asp-for="customer.PostalCode" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="stripeModel.Amount"></label>
+                <input asp-for="stripeModel.Amount" class="form-control" readonly />
+            </div>
+
+            
+
+            <!-- Stripe Card Element -->
+            <div class="form-group">
+                <label>Card Details</label>
+                <div id="card-element" class="form-control"></div>
+                <span class="text-danger" id="card-errors"></span>
+            </div>
+
+            <input type="hidden" asp-for="stripeModel.StripeToken" id="stripeToken" />
+
+            <button type="submit" class="btn btn-primary">Pagar</button>
+        </form>
+    </div>
+    <div class="col-sm-6">
+        <table class="table table-hover align-middle">
+
+            <tbody>
+                @foreach (var item in Model.lstCart)
+                {
+                    <tr class="cartItem" data-price="@item.Price" data-idProduct="@item.IdProduct">
+                        <td>@item.Title</td>
+                        <td class="price" hidden>Price: @item.Price</td>
+                        <td class="quantity">Quantity: @item.Quantity</td>
+                        <td class="totalPrice"></td>
+                        <td>
+                            @if (item.Picture != null && item.Picture.Length > 0)
+                            {
+                                var base64Image = Convert.ToBase64String(item.Picture);
+                                var imageSrc = $"data:image/png;base64,{base64Image}";
+                                <a href="@Url.Action("ProductView", "Home", new { idProduct = item.IdProduct })">
+                                    <img src="@imageSrc" alt="Product image" style="width: 100px; height: auto;" class="img-thumbnail" />
+                                </a>
+
+
+                            }
+                            else
+                            {
+                                <span class="text-muted">No Image</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="~/js/CheckOut.js"></script>
+    <script>
+        const stripe = Stripe('@ViewBag.StripePublicKey');
+        const elements = stripe.elements();
+        const card = elements.create('card');
+        card.mount('#card-element');
+
+        const form = document.getElementById('payment-form');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const result = await stripe.createToken(card);
+            if (result.error) {
+                document.getElementById('card-errors').textContent = result.error.message;
+            } else {
+                document.getElementById('stripeToken').value = result.token.id;
+                form.submit();
+            }
+        });
+    </script>
+}

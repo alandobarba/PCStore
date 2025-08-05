@@ -1,0 +1,6 @@
+obj/
+.vs/
+bin/
+# /password.txt -> con la diagonal al inicio solo va a ignorar el archivo password.txt que este en raiz
+# password.txt -> sin la diagonal al inicio gitignore va a ignorar en todo el proyecto, cualquier archivo que se llame txt
+# [Dd]ebug/ -> los corchetes indican que las dos letras que se ponen que pueden ser mayuscula o minuscula, en este caso la letra d.

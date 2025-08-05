@@ -1,0 +1,75 @@
+﻿body {
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+
+}
+h1 {
+    text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
+}
+
+.product-img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 3;
+    object-fit: cover;
+    display: block;
+}
+
+.card-img-top {
+    margin: 0;
+    padding: 0;
+    border-radius: 15px 15px 0 0;
+}
+.card {
+    border: none;
+    border-radius: 50px;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.05); /* o un color que contraste */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); /* da profundidad */
+}
+.card-text {
+    color: white;
+    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+}
+.card-body {
+    color: black;
+    text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
+}
+
+.poligon {
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: 100vw;
+    padding: 4rem 1rem;
+    text-align: center;
+    background: linear-gradient(135deg, #ff6f91 0%, #ff9a8d 100%);
+    color: white;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+}
+.filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+    .filter-bar input,
+    .filter-bar select {
+        padding: 0.6rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: var(--radius);
+        font-size: 0.95rem;
+        flex: 1 1 200px;
+        transition: border-color var(--transition);
+    }
+
+        .filter-bar input:focus,
+        .filter-bar select:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+

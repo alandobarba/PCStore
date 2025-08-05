@@ -1,0 +1,35 @@
+﻿@model IEnumerable<P_CStore.Models.OrderListDTO>
+
+<link href="~/css/MyOrders.css" rel="stylesheet" />
+
+@{
+    ViewData["Title"] = "My Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="mb-4">My Orders</h1>
+
+<div class="container">
+    @foreach (var order in Model)
+    {
+        <a href="@Url.Action("OrderDetails", "Order", new { idTransaction = order.IdTransaction })"
+           class="text-decoration-none text-dark">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Order #: @order.IdTransaction</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Date: @order.StartDate.ToString("yyyy-MM-dd")</h6>
+
+                    <div class="d-flex flex-wrap gap-3 mt-3">
+                        @foreach (var picture in order.LstPicture)
+                        {
+                            var base64Image = $"data:image/png;base64,{Convert.ToBase64String(picture)}";
+                            <img src="@base64Image" class="img-thumbnail"
+                                 style="width: 150px; height: 150px; object-fit: cover;"
+                                 alt="Product Image" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </a>
+    }
+</div>

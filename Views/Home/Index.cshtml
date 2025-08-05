@@ -1,0 +1,66 @@
+﻿@model IEnumerable<P_CStore.Models.IndexModel>
+
+<link rel="stylesheet" type="text/css" href="~/css/MainView.css">
+
+@{
+    ViewData["Title"] = "Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="poligon">
+    <h1>Come and check our latest products!</h1>
+    <p>Explore our products, prices and more.</p>
+    <a href="#" class="btn btn-light">Shop Now</a>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="display-4 text-center mb-4"><b>P&C Store</b></h1>
+
+            <div class="filter-bar">
+                <input type="text" placeholder="Search products…">
+                <select>
+                    <option value="">Sort by</option>
+                    <option value="price-asc">Price: From Low to High</option>
+                    <option value="price-desc">Price: From High to Low</option>
+                    <option value="newest">The Newest</option>
+                </select>
+            </div>
+
+            <!-- Contenedor de productos -->
+            <div id="product-cards" class="row row-cols-1 row-cols-md-3 g-4">
+                @foreach (var item in Model)
+                {
+                    <div class="col" data-product-id="@item.IdProduct">
+                        <div class="card h-100 shadow-sm border-light rounded">
+
+                            <!-- Imagen arriba del card-body (como lo espera Bootstrap) -->
+                            <a href="@Url.Action("ProductView", "Home", new { idProduct = item.IdProduct })">
+                                @if (item.Picture != null)
+                                {
+                                    <img src="data:image/jpeg;base64,@Convert.ToBase64String(item.Picture)" class="card-img-top product-img" alt="@item.ProductName" />
+                                }
+                                else
+                                {
+                                    <img src="https://via.placeholder.com/300" class="card-img-top product-img" alt="No image" />
+                                }
+                            </a>
+
+                            <div class="card-body d-flex flex-column">
+                                <h2 class="card-title text-center mt-3">@item.ProductName</h2>
+                                <p class="card-text  text-center" style="font-size: 14px;">@item.ProductDescription</p>
+                                <p class="card-text text-center fw-bold">@item.SellingPrice.ToString("C")</p>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/Index.js"></script>
+}
